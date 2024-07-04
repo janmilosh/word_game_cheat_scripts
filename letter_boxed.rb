@@ -4,7 +4,6 @@ group1 = ARGV[0].split('')
 group2 = ARGV[1].split('')
 group3 = ARGV[2].split('')
 group4 = ARGV[3].split('')
-first_letter = ARGV[4]
 test_letters = group1 + group2 + group3 + group4
 TEST_GROUPS = [group1, group2, group3, group4]
 all_letters = ('a'..'z').to_a
@@ -44,15 +43,7 @@ end
   words = []
   wordlist = JSON.parse(File.read("word_lists/#{i}_letter.json"))
   wordlist.each { |entry| words << entry["word"] }
-
-  words.map! do |word|
-    if first_letter
-      word if match?(word) && word.split('').first == first_letter
-    else
-      word if match?(word)
-    end
-  end
-
+  words.map! { |word| word if match?(word) }
   words.reject!(&:nil?)
   possibilities << words
 end
@@ -71,4 +62,14 @@ possibilities.each do |word1|
 end
 
 results.map! { |result| result.sort }.uniq!
+results.map! do |result|
+  first_of_last = result.last.split('').first
+  last_of_first = result.first.split('').last
+  if first_of_last == last_of_first
+    result
+  else
+    result.reverse!
+  end
+end
+
 results.each { |result| puts "#{result.first}, #{result.last}" }
