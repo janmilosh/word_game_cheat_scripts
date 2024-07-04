@@ -70,5 +70,5 @@ possibilities.each do |word1|
   end
 end
 
-print results
-puts
+results.map! { |result| result.sort }.uniq!
+results.each { |result| puts "#{result.first}, #{result.last}" }
