@@ -6,7 +6,7 @@ required_letter = test_letters.first
 all_letters = ('a'..'z').to_a
 bad_letters = all_letters.difference(test_letters)
 
-(4..9).each do |i|
+(4..12).each do |i|
   words = []
   wordlist = JSON.parse(File.read("word_lists/#{i}_letter.json"))
   wordlist.each { |entry| words << entry["word"] }
